@@ -53,6 +53,28 @@ User.init(
         }
         //1.5 Step Two Ends
     },
+    //2.5 Step 1 Start
+    {
+        hooks: {
+            // set up beforeCreate lifecycle "hook" functionality
+            //2.5 step 2 add async before beforeCreate and new before UserData
+                //add newUserData. password =
+                // replace return with await
+                //delete .then(newUserData => {})
+            async beforeCreate(newUserData) {
+                newUserData.password = await bcrypt.hash(newUserData.password, 10);
+                    return newUserData;
+                },
+                //2.5 Step 2 start
+                // set up beforeUpdate lifecycle "hook" functionality
+                async beforeUpdate(updatedUserData) {
+                    updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+                    return updatedUserData;
+                }
+                //2.5 step 2 end
+        }
+    },
+    //2.5 step 1 stop
     {
         // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
 
