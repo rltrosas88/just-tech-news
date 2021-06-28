@@ -15,6 +15,7 @@ class User extends Model {
     }
 }
 
+// create fields/columns for User model
 // define table columns and configuration
 User.init(
     {
@@ -44,7 +45,7 @@ User.init(
             unique: true,
             // if allowNull is set to false, we can run our data through validators before creating the table data
             validate: {
-            isEmail: true
+                isEmail: true
             }
         },
         // define a password column
@@ -68,19 +69,17 @@ User.init(
                 //delete .then(newUserData => {})
             async beforeCreate(newUserData) {
                 newUserData.password = await bcrypt.hash(newUserData.password, 10);
-                    return newUserData;
-                },
+                return newUserData;
+            },
                 //2.5 Step 2 start
                 // set up beforeUpdate lifecycle "hook" functionality
-                async beforeUpdate(updatedUserData) {
-                    updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
-                    return updatedUserData;
-                }
-                //2.5 step 2 end
-        }
-    },
-    //2.5 step 1 stop
-    {
+            async beforeUpdate(updatedUserData) {
+                updatedUserData.password = await bcrypt.hash(updatedUserData.password, 10);
+                return updatedUserData;
+            }
+            //2.5 step 2 end
+        },
+        //2.5 step 1 stop
         // TABLE CONFIGURATION OPTIONS GO HERE (https://sequelize.org/v5/manual/models-definition.html#configuration))
 
         // pass in our imported sequelize connection (the direct connection to our database)

@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
-    });
+        });
 });
 
 // GET /api/users/1
@@ -55,6 +55,7 @@ router.post('/', (req, res) => {
             res.status(500).json(err);
         });
 });
+
 //2.6 part 1
 router.post('/login', (req, res) => {
     // Query operation
@@ -68,17 +69,16 @@ router.post('/login', (req, res) => {
             res.status(400).json({ message: 'No user with that email address!' });
             return;
         }
-
+    
         const validPassword = dbUserData.checkPassword(req.body.password);
-        
-            if (!validPassword) {
-                res.status(400).json({ message: 'Incorrect password!' });
-                return;
-            }
-
+    
+        if (!validPassword) {
+            res.status(400).json({ message: 'Incorrect password!' });
+            return;
+        }
+    
         res.json({ user: dbUserData, message: 'You are now logged in!' });
-
-    });  
+    });
 });
 
 // PUT /api/users/1
@@ -88,9 +88,7 @@ router.put('/:id', (req, res) => {
 
     // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
     User.update(req.body, {
-        //2.5 step 3 start
         individualHooks: true,
-        //2.5 step 3 end
         where: {
             id: req.params.id
         }
