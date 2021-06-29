@@ -9,7 +9,14 @@ router.get('/', (req, res) => {
     //console.log('======================');
     Post.findAll({
         //3.6 step THREE Query configuration
-        attributes: ['id', 'post_url', 'title', 'created_at'],
+        //4.5 step ONE update the `.findAll()` method's attributes [sequelize.literal] to include the total vote count for a post
+        attributes: [
+            'id', 
+            'post_url', 
+            'title', 
+            'created_at',
+            [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+        ],
         //3.6 step TWELVE to ensure that the latest news articles are show first to the client
         order: [['created_at', 'DESC']],
         //3.6 step FOUR include the JOIN to the User table
@@ -34,7 +41,14 @@ router.get('/:id', (req, res) => {
         where: {
             id: req.params.id
         },
-        attributes: ['id', 'post_url', 'title', 'created_at'],
+        attributes: [
+            'id', 
+            'post_url', 
+            'title', 
+            'created_at',
+            //4.5 step TWO
+            [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
+        ],
         include: [
             {
                 model: User,
