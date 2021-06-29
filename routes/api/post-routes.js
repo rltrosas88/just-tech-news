@@ -1,6 +1,8 @@
 //3.6 step ONE  include packages and models that is needed in order to create the Express.js API end points
 const router = require('express').Router();
 const { Post, User } = require('../../models');
+//4.4 step THREE import the connection to the database 
+const sequelize = require('../../config/connection');
 
 // 3.6 step TWO create a route that will get all users
 router.get('/', (req, res) => {
@@ -68,6 +70,37 @@ router.post('/', (req, res) => {
         });
 });
 
+// 4.4 step ONE PUT /api/posts/upvote
+router.put('/upvote', (req, res) => {
+    Vote.create({
+        user_id: req.body.user_id,
+        post_id: req.body.post_id
+    //4.4 step FOUR update the PUT route's function
+    }).then(() => {
+        // then find the post we just voted on
+        return Post.findOne({
+            where: {
+                id: req.body.post_id
+            },
+            attributes: [
+                'id',
+                'post_url',
+                'title',
+                'created_at',
+                // use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name `vote_count`
+                [
+                    sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'),
+                    'vote_count'
+                ]
+            ]
+        })
+        .then(dbPostData => res.json(dbPostData))
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        });
+    })
+});
 
 //3.6 step TEN update the Post's Title
 router.put('/:id', (req, res) => {
