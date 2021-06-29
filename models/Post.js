@@ -46,12 +46,12 @@ Post.init(
     },
     //configure the meta data, including the naming conventions
     {
-      sequelize,
-      freezeTableName: true,
-      underscored: true,
-      modelName: 'post'
-    }
-  );
+        sequelize,
+        freezeTableName: true,
+        underscored: true,
+        modelName: 'post'
+      }
+);
 
-  //3.4 step FOUR make the Post model accessible to other parts of the applicaiont
-  module.exports = Post;
+//3.4 step FOUR make the Post model accessible to other parts of the applicaiont
+module.exports = Post;

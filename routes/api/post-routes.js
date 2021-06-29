@@ -6,23 +6,23 @@ const { Post, User } = require('../../models');
 router.get('/', (req, res) => {
     //console.log('======================');
     Post.findAll({
-      //3.6 step THREE Query configuration
-      attributes: ['id', 'post_url', 'title', 'created_at'],
-      //3.6 step TWELVE to ensure that the latest news articles are show first to the client
-      order: [['created_at', 'DESC']], 
-      //3.6 step FOUR include the JOIN to the User table
-      include: [
-        {
-          model: User,
-          attributes: ['username']
-        }
-      ]
+        //3.6 step THREE Query configuration
+        attributes: ['id', 'post_url', 'title', 'created_at'],
+        //3.6 step TWELVE to ensure that the latest news articles are show first to the client
+        order: [['created_at', 'DESC']],
+        //3.6 step FOUR include the JOIN to the User table
+        include: [
+            {
+            model: User,
+            attributes: ['username']
+            }
+        ]
     })
     //3.6 step FIVE create a Promise that captures the response from the database call
     .then(dbPostData => res.json(dbPostData))
     .catch(err => {
-      console.log(err);
-      res.status(500).json(err);
+        console.log(err);
+        res.status(500).json(err);
     });
 });
 
@@ -113,5 +113,6 @@ router.delete('/:id', (req, res) => {
             res.status(500).json(err);
         });
 });
+
 //3.6 step SIX expose the changes to the router
 module.exports = router;

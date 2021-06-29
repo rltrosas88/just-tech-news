@@ -1,7 +1,7 @@
 //1.6 Step 1 
     //this included creating the api I folder in routes and user-routes.js in the api folder
 const router = require('express').Router();
-const { User } = require('../../models');
+const { User, Post } = require('../../models');
 
 // GET /api/users
 router.get('/', (req, res) => {
@@ -25,7 +25,13 @@ router.get('/:id', (req, res) => {
         attributes: { exclude: ['password'] },
         where: {
             id: req.params.id
-        }
+        },
+        include: [
+            {
+                model: Post,
+                attributes: ['id', 'title', 'post_url', 'created_at']
+            }
+        ]
     })
         .then(dbUserData => {
             if (!dbUserData) {
@@ -77,8 +83,8 @@ router.post('/login', (req, res) => {
             return;
         }
     
-        res.json({ user: dbUserData, message: 'You are now logged in!' });
-    });
+            res.json({ user: dbUserData, message: 'You are now logged in!' });
+      });
 });
 
 // PUT /api/users/1

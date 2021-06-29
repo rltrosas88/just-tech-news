@@ -16,6 +16,6 @@ app.use(routes);
 //3.5 step THREE change the value of the force property to true
     // will make the table re-create if there are any association changes
 //3.5 step FOUR change the value of the force property back to false
-sequelize.sync({ force: false }).then(() => {
+sequelize.sync({ force: true }).then(() => {
     app.listen(PORT, () => console.log('Now listening'));
 });
