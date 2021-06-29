@@ -1,19 +1,20 @@
 //3.6 step ONE  include packages and models that is needed in order to create the Express.js API end points
 const router = require('express').Router();
-const { Post, User } = require('../../models');
 //4.4 step THREE import the connection to the database 
 const sequelize = require('../../config/connection');
+const { Post, User, Vote } = require('../../models');
+
 
 // 3.6 step TWO create a route that will get all users
 router.get('/', (req, res) => {
-    //console.log('======================');
+    console.log('======================');
     Post.findAll({
         //3.6 step THREE Query configuration
         //4.5 step ONE update the `.findAll()` method's attributes [sequelize.literal] to include the total vote count for a post
         attributes: [
-            'id', 
-            'post_url', 
-            'title', 
+            'id',
+            'post_url',
+            'title',
             'created_at',
             [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
         ],
@@ -22,17 +23,17 @@ router.get('/', (req, res) => {
         //3.6 step FOUR include the JOIN to the User table
         include: [
             {
-            model: User,
-            attributes: ['username']
+                model: User,
+                attributes: ['username']
             }
         ]
     })
     //3.6 step FIVE create a Promise that captures the response from the database call
-    .then(dbPostData => res.json(dbPostData))
-    .catch(err => {
-        console.log(err);
-        res.status(500).json(err);
-    });
+        .then(dbPostData => res.json(dbPostData))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 //3.6 step step EIGHT get-one-query that will use a request parameter
@@ -42,9 +43,9 @@ router.get('/:id', (req, res) => {
             id: req.params.id
         },
         attributes: [
-            'id', 
-            'post_url', 
-            'title', 
+            'id',
+            'post_url',
+            'title',
             'created_at',
             //4.5 step TWO
             [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
@@ -86,34 +87,36 @@ router.post('/', (req, res) => {
 
 // 4.4 step ONE PUT /api/posts/upvote
 router.put('/upvote', (req, res) => {
-    Vote.create({
-        user_id: req.body.user_id,
-        post_id: req.body.post_id
-    //4.4 step FOUR update the PUT route's function
-    }).then(() => {
-        // then find the post we just voted on
-        return Post.findOne({
-            where: {
-                id: req.body.post_id
-            },
-            attributes: [
-                'id',
-                'post_url',
-                'title',
-                'created_at',
-                // use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name `vote_count`
-                [
-                    sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'),
-                    'vote_count'
-                ]
-            ]
-        })
-        .then(dbPostData => res.json(dbPostData))
+    // Vote.create({
+    //     user_id: req.body.user_id,
+    //     post_id: req.body.post_id
+    // //4.4 step FOUR update the PUT route's function
+    // }).then(() => {
+    //     // then find the post we just voted on
+    //     return Post.findOne({
+    //         where: {
+    //             id: req.body.post_id
+    //         },
+    //         attributes: [
+    //             'id',
+    //             'post_url',
+    //             'title',
+    //             'created_at',
+    //             // use raw MySQL aggregate function query to get a count of how many votes the post has and return it under the name `vote_count`
+    //             [
+    //                 sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'),
+    //                 'vote_count'
+    //             ]
+    //         ]
+    //     })
+    //     .then(dbPostData => res.json(dbPostData))
+    //4.6 step FOUR custom static method created in models/Post.js
+    Post.upvote(req.body, { Vote })
+        .then(updatedPostData => res.json(updatedPostData))
         .catch(err => {
             console.log(err);
             res.status(400).json(err);
         });
-    })
 });
 
 //3.6 step TEN update the Post's Title

@@ -91,8 +91,8 @@ router.post('/login', (req, res) => {
             return;
         }
     
-            res.json({ user: dbUserData, message: 'You are now logged in!' });
-      });
+        res.json({ user: dbUserData, message: 'You are now logged in!' });
+    });
 });
 
 // PUT /api/users/1
@@ -100,7 +100,7 @@ router.put('/:id', (req, res) => {
     //1.6 Step 5
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
 
-    // if req.body has exact key/value pairs to match the model, you can just use `req.body` instead
+    // pass in req.body instead to only update what's passed through
     User.update(req.body, {
         individualHooks: true,
         where: {

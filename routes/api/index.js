@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const userRoutes = require('./user-routes');
+const userRoutes = require('./user-routes.js');
 //3.6 step SEVEN add the postRoutes
 const postRoutes = require('./post-routes');
 

@@ -1,10 +1,10 @@
+//1.5 Step One
+//import the Model class and DataTypes object from Sequelize
+const { Model, DataTypes } = require('sequelize');
 //2.4 Step one include the node package called bycrypt 
     //to perform the hashing function
     //hashing performs a one-way transformation on apassword, turning the password into another string, called the hashed password
 const bcrypt = require('bcrypt');
-//1.5 Step One
-//import the Model class and DataTypes object from Sequelize
-const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
 
 // create our User model

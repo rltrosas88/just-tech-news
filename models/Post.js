@@ -4,7 +4,32 @@ const sequelize = require('../config/connection');
 
 //3.4 step TWO define the post model
 // create our Post model
-class Post extends Model {}
+//4.6 step ONE update the class post extend model execution
+class Post extends Model {
+    static upvote(body, models) {
+        //4.6 step TWO pass the value of req.body as paramters
+        return models.Vote.create({
+            user_id: body.user_id,
+            post_id: body.post_id
+        }).then(() => {
+            return Post.findOne({
+                where: {
+                    id: body.post_id
+                },
+                attributes: [
+                    'id',
+                    'post_url',
+                    'title',
+                    'created_at',
+                    [
+                        sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'),
+                        'vote_count'
+                    ]
+                ]
+            });
+        });
+    }
+}
 
 //3.4 step THREE define the columns in the Post, 
     //configure the naming conventions, and
@@ -50,7 +75,7 @@ Post.init(
         freezeTableName: true,
         underscored: true,
         modelName: 'post'
-      }
+    }
 );
 
 //3.4 step FOUR make the Post model accessible to other parts of the applicaiont
