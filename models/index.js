@@ -48,5 +48,23 @@ Post.hasMany(Vote, {
     foreignKey: 'post_id'
 });
 
+//5.3 step FOUR add the model associations
+Comment.belongsTo(User, {
+    foreignKey: 'user_id'
+});
+  
+Comment.belongsTo(Post, {
+    foreignKey: 'post_id'
+});
+  
+User.hasMany(Comment, {
+    foreignKey: 'user_id'
+});
+  
+Post.hasMany(Comment, {
+    foreignKey: 'post_id'
+});
+
 //4.3 step SIX export Vote along with User and Post
-module.exports = { User, Post, Vote };
+//5.3 step THREE export Comment model along with User, Post, and Vote
+module.exports = { User, Post, Vote, Comment };
