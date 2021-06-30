@@ -32,6 +32,15 @@ router.get('/:id', (req, res) => {
                 model: Post,
                 attributes: ['id', 'title', 'post_url', 'created_at']
             },
+            //5.5 step THREE include the Comment model here
+            {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'created_at'],
+                include: {
+                    model: Post,
+                    attributes: ['title']
+                }
+              },
             //4.5 step THREE include posts and votes
             {
                 model: Post,

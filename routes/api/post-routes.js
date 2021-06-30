@@ -2,13 +2,16 @@
 const router = require('express').Router();
 //4.4 step THREE import the connection to the database 
 const sequelize = require('../../config/connection');
-const { Post, User, Vote } = require('../../models');
+//5.5 step TWO add comment to the destructured objects 
+const { Post, User, Vote, Comment } = require('../../models');
 
 
 // 3.6 step TWO create a route that will get all users
 router.get('/', (req, res) => {
     console.log('======================');
     Post.findAll({
+        //5.5 step ONE
+        order: [['created_at', 'DESC']],
         //3.6 step THREE Query configuration
         //4.5 step ONE update the `.findAll()` method's attributes [sequelize.literal] to include the total vote count for a post
         attributes: [
@@ -19,9 +22,18 @@ router.get('/', (req, res) => {
             [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
         ],
         //3.6 step TWELVE to ensure that the latest news articles are show first to the client
-        order: [['created_at', 'DESC']],
+        //order: [['created_at', 'DESC']],
         //3.6 step FOUR include the JOIN to the User table
         include: [
+            //5.5 step ONE include the Comment model here:
+            {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
+            },
             {
                 model: User,
                 attributes: ['username']
