@@ -4,7 +4,12 @@ const { Comment } = require('../../models');
 
 router.get('/', (req, res) => {
     //5.4 step FOUR
-    
+    Comment.findAll()
+        .then(dbCommentData => res.json(dbCommentData))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 router.post('/', (req, res) => {

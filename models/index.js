@@ -5,6 +5,7 @@ const Post = require('./Post');
 const User = require('./User');
 //4.3 step THREE importing the Vote model
 const Vote = require('./Vote');
+const Comment = require('./Comment');
 
 //3.5 step ONE create associations that a user can belong to many Posts
 User.hasMany(Post, {

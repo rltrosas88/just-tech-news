@@ -6,8 +6,8 @@ const postRoutes = require('./post-routes');
 //5.4 step TWO import the comment-routes.js
 const commentRoutes = require('./comment-routes');
 
-router.use('/comments', commentRoutes);
 router.use('/users', userRoutes);
 router.use('/posts', postRoutes);
+router.use('/comments', commentRoutes);
 
 module.exports = router;
