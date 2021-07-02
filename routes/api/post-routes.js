@@ -3,7 +3,7 @@ const router = require('express').Router();
 //4.4 step THREE import the connection to the database 
 const sequelize = require('../../config/connection');
 //5.5 step TWO add comment to the destructured objects 
-const { Post, User, Comment, Vote } = require('../../models');
+const { Post, User, Comments, Vote } = require('../../models');
 
 
 // 3.6 step TWO create a route that will get all users
@@ -27,7 +27,7 @@ router.get('/', (req, res) => {
         include: [
             //5.5 step ONE include the Comment model here:
             {
-                model: Comment,
+                model: Comments,
                 attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model: User,
@@ -64,7 +64,7 @@ router.get('/:id', (req, res) => {
         ],
         include: [
             {
-                model: Comment,
+                model: Comments,
                 attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model: User,
@@ -131,7 +131,7 @@ router.put('/upvote', (req, res) => {
     //     })
     //     .then(dbPostData => res.json(dbPostData))
     //4.6 step FOUR custom static method created in models/Post.js
-    Post.upvote(req.body, { Vote, Comment, User })
+    Post.upvote(req.body, { Vote, Comments, User })
         .then(updatedVoteData => res.json(updatedVoteData))
         .catch(err => {
             console.log(err);

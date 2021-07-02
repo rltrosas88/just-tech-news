@@ -2,7 +2,7 @@
     //this included creating the api I folder in routes and user-routes.js in the api folder
 const router = require('express').Router();
 //4.5 part FOUR import the Vote model
-const { User, Post, Comment, Vote } = require('../../models');
+const { User, Post, Comments, Vote } = require('../../models');
 
 // GET /api/users
 router.get('/', (req, res) => {
@@ -34,7 +34,7 @@ router.get('/:id', (req, res) => {
             },
             //5.5 step THREE include the Comment model here
             {
-                model: Comment,
+                model: Comments,
                 attributes: ['id', 'comment_text', 'created_at'],
                 include: {
                     model: Post,

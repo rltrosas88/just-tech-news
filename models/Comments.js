@@ -5,9 +5,9 @@
 const { Model, DataTypes } = require('sequelize');
 const sequelize = require('../config/connection');
     
-class Comment extends Model {}
+class Comments extends Model {}
     
-Comment.init(
+Comments.init(
     {
         // 5.3 step TWO columns will go here
         id: {
@@ -46,4 +46,4 @@ Comment.init(
     }
 );
     
-    module.exports = Comment;
+    module.exports = Comments;

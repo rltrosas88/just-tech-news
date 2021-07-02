@@ -5,7 +5,7 @@ const Post = require('./Post');
 const User = require('./User');
 //4.3 step THREE importing the Vote model
 const Vote = require('./Vote');
-const Comment = require('./Comment');
+const Comments = require('./Comments');
 
 //3.5 step ONE create associations that a user can belong to many Posts
 User.hasMany(Post, {
@@ -50,22 +50,22 @@ Post.hasMany(Vote, {
 });
 
 //5.3 step FOUR add the model associations
-Comment.belongsTo(User, {
+Comments.belongsTo(User, {
     foreignKey: 'user_id'
 });
   
-Comment.belongsTo(Post, {
+Comments.belongsTo(Post, {
     foreignKey: 'post_id'
 });
   
-User.hasMany(Comment, {
+User.hasMany(Comments, {
     foreignKey: 'user_id'
 });
   
-Post.hasMany(Comment, {
+Post.hasMany(Comments, {
     foreignKey: 'post_id'
 });
 
 //4.3 step SIX export Vote along with User and Post
 //5.3 step THREE export Comment model along with User, Post, and Vote
-module.exports = { User, Post, Vote, Comment };
+module.exports = { User, Post, Vote, Comments };
