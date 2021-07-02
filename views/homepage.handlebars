@@ -1,2 +1,22 @@
 {{!-- 14.1.4 step THREE the homepage html --}}
-<div>You are on the homepage</div>
+{{!-- <div>You are on the homepage</div> --}}
+
+{{!-- 14.1.5 step TWO using step ONE take a single "post" object and pass it to the homepage.handlebars template 
+    Each property on the object becomes available in the template using the Handlebars.js syntax--}}
+<ol class="post-list">
+    <li>
+        <article class="post">
+            <div class="title">
+                {{!-- two curly brackets will convert HTML characters to strings. --}}
+                <a href="{{post_url}}" target="_blank">{{title}}</a>
+                <span>({{post_url}})</span>
+            </div>
+            <div class="meta">
+                {{vote_count}} point(s) by {{user.username}} on
+                {{created_at}}
+                |
+                <a href="/post/{{id}}">{{comments.length}} comment(s)</a>
+            </div>
+        </article>
+    </li>
+</ol>
