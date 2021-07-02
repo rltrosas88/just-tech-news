@@ -28,7 +28,7 @@ class Post extends Model {
                 ],
                 include: [
                     {
-                        model: models.Comment,
+                        model: models.Comments,
                         attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                         include: {
                             model: models.User,

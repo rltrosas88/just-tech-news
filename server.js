@@ -2,12 +2,16 @@
 const express = require('express');
 const routes = require('./routes');
 const sequelize = require('./config/connection');
+//14.1.3 step TWO.ONE make the style sheet available to the client
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+// 14.1.3 step TWO.TWO make the style sheet available to the client
+app.use(express.static(path.join(__dirname, 'public')));
 
 // turn on routes
 app.use(routes);
