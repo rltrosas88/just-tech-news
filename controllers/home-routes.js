@@ -51,6 +51,11 @@ router.get('/', (req, res) => {
         });
 });
 
+// 14.2.3 step FOUR add a route that renders login
+router.get('/login', (req, res) => {
+    res.render('login');
+});
+
 //   res.render('homepage', {
 //     //14.1.5 step ONE include all of the data you want to pass to your template using res.render() method
 //     id: 1,
