@@ -141,28 +141,40 @@ router.put('/upvote', (req, res) => {
 
 //3.6 step TEN update the Post's Title
 router.put('/:id', (req, res) => {
-    Post.update(
-        {
-            title: req.body.title
-        },
-        {
-            where: {
-                id: req.params.id
-            }
-        }
-    )
-        .then(dbPostData => {
-            if (!dbPostData) {
-                res.status(404).json({ message: 'No post found with this id' });
-                return;
-            }
-            res.json(dbPostData);
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-        });
+    //14.3.4 step FIVE
+    // make sure the session exists first
+    if (req.session) {
+        // pass session id along with all destructured properties on req.body
+        Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
+            .then(updatedVoteData => res.json(updatedVoteData))
+            .catch(err => {
+                console.log(err);
+                res.status(500).json(err);
+            });
+    }
 });
+//     Post.update(
+//         {
+//             title: req.body.title
+//         },
+//         {
+//             where: {
+//                 id: req.params.id
+//             }
+//         }
+//     )
+//         .then(dbPostData => {
+//             if (!dbPostData) {
+//                 res.status(404).json({ message: 'No post found with this id' });
+//                 return;
+//             }
+//             res.json(dbPostData);
+//         })
+//         .catch(err => {
+//             console.log(err);
+//             res.status(500).json(err);
+//         });
+// });
 
 //3.6 step ELEVEN delete an entry
 router.delete('/:id', (req, res) => {
