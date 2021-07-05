@@ -118,6 +118,19 @@ router.post('/login', (req, res) => {
         });
     });
 });
+//14.2.6 step ONE add a new /logout
+router.post('/logout', (req, res) => {
+    //14.2.6 step TWO use the destroy() method to clear the session
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    }
+    else {
+        res.status(404).end();
+    }
+
+});
 
 // PUT /api/users/1
 router.put('/:id', (req, res) => {
