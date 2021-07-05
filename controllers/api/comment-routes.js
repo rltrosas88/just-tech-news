@@ -15,16 +15,20 @@ router.get('/', (req, res) => {
 router.post('/', (req, res) => {
     //5.4 step THREE 
     // expects => {comment_text: "This is the comment", user_id: 1, post_id: 2}
-    Comments.create({
-        comment_text: req.body.comment_text,
-        user_id: req.session.user_id,
-        post_id: req.body.post_id
-    })
-        .then(dbCommentData => res.json(dbCommentData))
-        .catch(err => {
-            console.log(err);
-            res.status(400).json(err);
-        });
+    //14.3.5 step THREE update the .post('/')
+    if (req.session) {
+        Comments.create({
+            comment_text: req.body.comment_text,
+            post_id: req.body.post_id,
+            // use the id from the session
+            user_id: req.session.user_id
+        })
+            .then(dbCommentData => res.json(dbCommentData))
+            .catch(err => {
+                console.log(err);
+                res.status(400).json(err);
+            });
+    }
 });
 
 router.delete('/:id', (req, res) => {
