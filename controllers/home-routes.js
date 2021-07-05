@@ -92,7 +92,11 @@ router.get('/post/:id', (req, res) => {
             const post = dbPostData.get({ plain: true });
     
             // pass data to template
-            res.render('single-post', { post });
+            //14.3.6 step ONE update the route to pass a session variable to the template
+            res.render('single-post', {
+                post,
+                loggedIn: req.session.loggedIn
+            });
         })
         .catch(err => {
             console.log(err);

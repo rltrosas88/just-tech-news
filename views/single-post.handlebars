@@ -12,6 +12,8 @@
     </div>
 </article>
 {{!-- 14.3.3 step FOUR expand the layout to include the form and comments --}}
+{{!-- 14.3.6 step TWO use the variable to conditionally render the <form> element --}}
+{{#if loggedIn}}
 <form class="comment-form">
     <div>
         <textarea name="comment-body"></textarea>
@@ -22,6 +24,7 @@
         <button type="button" class="upvote-btn">upvote</button>
     </div>
 </form>
+{{/if}}
 
 <div class="comments">
     {{#each post.comments}}
@@ -37,5 +40,8 @@
 </div>
 
 {{!-- 14.3.4 step ONE --}}
+{{!-- 14.3.6 step THREE update to conditionally rend the script elements --}}
+{{#if loggedIn}}
 <script src="/javascript/comment.js"></script>
 <script src="/javascript/upvote.js"></script>
+{{/if}}
