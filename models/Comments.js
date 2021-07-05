@@ -17,8 +17,8 @@ Comments.init(
             autoIncrement: true
         },
         comment_text: {
-            type: DataTypes.STRING, 
-            allowNull:false,
+            type: DataTypes.STRING,
+            allowNull: false,
             validate: {
                 len: [1]
             }
@@ -42,8 +42,8 @@ Comments.init(
         sequelize,
         freezeTableName: true,
         underscored: true,
-        modelName: 'comment'
+        modelName: 'comments'
     }
 );
-    
-    module.exports = Comments;
+      
+module.exports = Comments;

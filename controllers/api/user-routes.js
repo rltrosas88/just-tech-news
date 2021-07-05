@@ -37,10 +37,10 @@ router.get('/:id', (req, res) => {
                 model: Comments,
                 attributes: ['id', 'comment_text', 'created_at'],
                 include: {
-                    model: Post,
-                    attributes: ['title']
+                  model: Post,
+                  attributes: ['title']
                 }
-              },
+            },
             //4.5 step THREE include posts and votes
             {
                 model: Post,
@@ -72,12 +72,14 @@ router.post('/', (req, res) => {
         email: req.body.email,
         password: req.body.password
     })
-        .then(dbUserData => res.json(dbUserData))
+        .then(dbUserData => {
+            res.json(dbUserData);
+        })
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
         });
-});
+  });
 
 //2.6 part 1
 router.post('/login', (req, res) => {
@@ -117,7 +119,7 @@ router.put('/:id', (req, res) => {
         }
     })
         .then(dbUserData => {
-            if (!dbUserData[0]) {
+            if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id' });
                 return;
             }
@@ -149,5 +151,5 @@ router.delete('/:id', (req, res) => {
             res.status(500).json(err);
         });
 });
-
+    
 module.exports = router;

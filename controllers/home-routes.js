@@ -5,10 +5,12 @@
 const router = require('express').Router();
 //14.1.6 step ONE import the necessary modules and models 
 const sequelize = require('../config/connection');
-const { Post, User, Comments } = require('../models');
+const { Post, User, Comments, Vote } = require('../models');
 
+// get all posts for homepage
 router.get('/', (req, res) => {
-  //14.1.6 step TWO update the route
+    console.log('======================');
+    //14.1.6 step TWO update the route
     Post.findAll({
         attributes: [
             'id',
@@ -34,7 +36,7 @@ router.get('/', (req, res) => {
     })
         .then(dbPostData => {
             //14.1.6 step THREE add console.log
-            console.log(dbPostData[0]);
+            //console.log(dbPostData[0]);
             //14.1.6 step FIVE the entire array of posts will be in the template the array needs to serialized
             const posts = dbPostData.map(post => post.get({ plain: true }));
             // pass a single post object into the homepage template

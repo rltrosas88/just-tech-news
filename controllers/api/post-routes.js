@@ -20,7 +20,7 @@ router.get('/', (req, res) => {
             [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
         ],
         //5.5 step ONE
-        order: [['created_at', 'DESC']],
+        //order: [['created_at', 'DESC']],
         //3.6 step TWELVE to ensure that the latest news articles are show first to the client
         //order: [['created_at', 'DESC']],
         //3.6 step FOUR include the JOIN to the User table
@@ -96,7 +96,7 @@ router.post('/', (req, res) => {
     Post.create({
         title: req.body.title,
         post_url: req.body.post_url,
-        user_id: req.body.user_id
+        user_id: req.session.user_id
     })
         .then(dbPostData => res.json(dbPostData))
         .catch(err => {
@@ -131,11 +131,11 @@ router.put('/upvote', (req, res) => {
     //     })
     //     .then(dbPostData => res.json(dbPostData))
     //4.6 step FOUR custom static method created in models/Post.js
-    Post.upvote(req.body, { Vote, Comments, User })
+    Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comments, User })
         .then(updatedVoteData => res.json(updatedVoteData))
         .catch(err => {
             console.log(err);
-            res.status(400).json(err);
+            res.status(500).json(err);
         });
 });
 
@@ -166,6 +166,7 @@ router.put('/:id', (req, res) => {
 
 //3.6 step ELEVEN delete an entry
 router.delete('/:id', (req, res) => {
+    console.log('id', req.params.id);
     Post.destroy({
         where: {
             id: req.params.id

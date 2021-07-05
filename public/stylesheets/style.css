@@ -4,26 +4,26 @@
 * {
     box-sizing: border-box;
 }
-  
-  body, html {
+      
+body, html {
     height: 100%;
     padding: 0;
     margin: 0;
     font-family: sans-serif;
     color: #333;
 }
-  
+      
 a {
     text-decoration: none;
     color: #225ca3;
     font-weight: bold;
     transition: color .1s;
 }
-  
+      
 a:hover {
     color: #3486eb;
 }
-  
+      
 button {
     background-color: #225ca3;
     border: 0;
@@ -34,22 +34,22 @@ button {
     cursor: pointer;
     border-radius: 5px;
 }
-  
+      
 button:hover {
     background-color: #3486eb;
 }
-  
-  .post-list {
+      
+.post-list {
     margin: 0;
     padding: 0;
 }
-  
+      
 textarea, input {
     padding: .5%;
     border-radius: 5px;
     border: 1px solid #ccc;
 }
-  
+      
 textarea:focus, input:focus {
     outline: none;
     border: 1px solid #3486eb;
@@ -59,7 +59,7 @@ textarea {
     min-width: 40%;
     min-height: 100px;
 }
-  
+      
 form > div {
     margin-bottom: 2%;
 }
@@ -84,7 +84,7 @@ header {
     align-items: center;
     padding: 0 1%;
 }
-  
+      
 header h1 {
     font-size: 1em;
 }
@@ -111,7 +111,7 @@ main {
     background: none;
     color: #3486eb;
 }
-  
+      
 .delete-post-btn {
     background-color: #d41414;
 }
@@ -135,7 +135,7 @@ main {
     display: block;
     margin: -1.5% 0 2% 0;
 }
-  
+      
 .upvote-btn {
     background-color: #197d0f;
     transition: background-color .1s;
@@ -157,7 +157,7 @@ main {
 .comment:nth-child(odd) {
     background-color: #fff5eb;
 }
-  
+      
 .comment .meta {
     font-size: 90%;
     margin-bottom: .5%;

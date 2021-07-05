@@ -15,7 +15,6 @@ Vote.init(
         // 4.3 step TWO add user_id field that holds the primary key value of a user
         user_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             references: {
                 model: 'user',
                 key: 'id'
@@ -23,7 +22,6 @@ Vote.init(
         },
         post_id: {
             type: DataTypes.INTEGER,
-            allowNull: false,
             references: {
                 model: 'post',
                 key: 'id'

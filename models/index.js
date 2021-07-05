@@ -14,7 +14,8 @@ User.hasMany(Post, {
 
 //3.5 step TWO the constraint is that a post can belong to one user
 Post.belongsTo(User, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
 
 //4.3 step FOUR associate User and Post to one another
@@ -23,22 +24,27 @@ Post.belongsTo(User, {
 User.belongsToMany(Post, {
     through: Vote,
     as: 'voted_posts',
-    foreignKey: 'user_id'
+
+    foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
       
 Post.belongsToMany(User, {
     through: Vote,
     as: 'voted_posts',
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'SET NULL'
 });
 
 //4.3 step FIVE conect User to Vote directly
 Vote.belongsTo(User, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
   
 Vote.belongsTo(Post, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'SET NULL'
 });
   
 User.hasMany(Vote, {
@@ -51,15 +57,18 @@ Post.hasMany(Vote, {
 
 //5.3 step FOUR add the model associations
 Comments.belongsTo(User, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
   
 Comments.belongsTo(Post, {
-    foreignKey: 'post_id'
+    foreignKey: 'post_id',
+    onDelete: 'SET NULL'
 });
   
 User.hasMany(Comments, {
-    foreignKey: 'user_id'
+    foreignKey: 'user_id',
+    onDelete: 'SET NULL'
 });
   
 Post.hasMany(Comments, {
