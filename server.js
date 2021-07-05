@@ -2,6 +2,8 @@
 const path = require('path');
 //1.6 step 9
 const express = require('express');
+//14.2.5 step ONE use express-ssion and sequelize store
+const session = require('express-session');
 //14.1.4 step ONE
     //after typing the following command npm install express-handlebars
     //set up Handlebars.js
@@ -11,12 +13,6 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 const sequelize = require('./config/connection');
-
-const hbs = exphbs.create({});
-
-//14.2.5 step ONE use express-ssion and sequelize store
-const session = require('express-session');
-
 const SequelizeStore = require('connect-session-sequelize')(session.Store);
 
 const sess = {
@@ -30,6 +26,8 @@ const sess = {
 };
 
 app.use(session(sess));
+
+const hbs = exphbs.create({});
 
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');

@@ -1,3 +1,28 @@
+//14.2.4 step SIX create a login request
+async function loginFormHandler(event) {
+    event.preventDefault();
+  
+    const email = document.querySelector('#email-login').value.trim();
+    const password = document.querySelector('#password-login').value.trim();
+  
+    if (email && password) {
+        const response = await fetch('/api/users/login', {
+            method: 'post',
+            body: JSON.stringify({
+                email,
+                password
+            }),
+            headers: { 'Content-Type': 'application/json' }
+        });
+  
+        if (response.ok) {
+            document.location.replace('/');
+        } else {
+            alert(response.statusText);
+        }
+    }
+}
+
 // 14.2.4 step TWO listen for the submit event
 // 14.2.4 step FOUR add async to the function and await keyword befor the promise
     //async/await acts as "syntactic sugar" for code and helps make Promises more readable
@@ -33,30 +58,7 @@ async function signupFormHandler(event) {
     }
 }
 
-//14.2.4 step SIX create a login request
-async function loginFormHandler(event) {
-    event.preventDefault();
-  
-    const email = document.querySelector('#email-login').value.trim();
-    const password = document.querySelector('#password-login').value.trim();
-  
-    if (email && password) {
-        const response = await fetch('/api/users/login', {
-            method: 'post',
-            body: JSON.stringify({
-                email,
-                password
-            }),
-            headers: { 'Content-Type': 'application/json' }
-        });
-  
-        if (response.ok) {
-            document.location.replace('/');
-        } else {
-            alert(response.statusText);
-        }
-    }
-}
-  
-document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
+
+document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
+

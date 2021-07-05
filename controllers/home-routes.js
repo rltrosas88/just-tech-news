@@ -10,8 +10,8 @@ const { Post, User, Comments, Vote } = require('../models');
 // get all posts for homepage
 router.get('/', (req, res) => {
     //14.2.5 part FOUR
-    console.log(req.session);
-    //console.log('======================');
+    //console.log(req.session);
+    console.log('======================');
     //14.1.6 step TWO update the route
     Post.findAll({
         attributes: [
