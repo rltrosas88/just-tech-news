@@ -9,7 +9,9 @@ const { Post, User, Comments, Vote } = require('../models');
 
 // get all posts for homepage
 router.get('/', (req, res) => {
-    console.log('======================');
+    //14.2.5 part FOUR
+    console.log(req.session);
+    //console.log('======================');
     //14.1.6 step TWO update the route
     Post.findAll({
         attributes: [
@@ -53,6 +55,12 @@ router.get('/', (req, res) => {
 
 // 14.2.3 step FOUR add a route that renders login
 router.get('/login', (req, res) => {
+    //14.2.5 step FIVE
+    if (req.session.loggedIn) {
+        res.redirect('/');
+        return;
+    }
+
     res.render('login');
 });
 
