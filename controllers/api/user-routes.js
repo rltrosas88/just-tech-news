@@ -78,14 +78,15 @@ router.post('/', (req, res) => {
                 req.session.user_id = dbUserData.id;
                 req.session.username = dbUserData.username;
                 req.session.loggedIn = true;
-
-            res.json(dbUserData);
+        
+                res.json(dbUserData);
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
         });
-        // .catch(err => {
-        //     console.log(err);
-        //     res.status(500).json(err);
-        // });
-  })
+});
 
 //2.6 part 1
 router.post('/login', (req, res) => {
@@ -113,11 +114,12 @@ router.post('/login', (req, res) => {
             req.session.user_id = dbUserData.id;
             req.session.username = dbUserData.username;
             req.session.loggedIn = true;
-
+        
             res.json({ user: dbUserData, message: 'You are now logged in!' });
         });
     });
 });
+
 //14.2.6 step ONE add a new /logout
 router.post('/logout', (req, res) => {
     //14.2.6 step TWO use the destroy() method to clear the session
@@ -129,7 +131,6 @@ router.post('/logout', (req, res) => {
     else {
         res.status(404).end();
     }
-
 });
 
 // PUT /api/users/1
