@@ -51,7 +51,8 @@ async function signupFormHandler(event) {
 
         // 14.2.4 step FIVE check the response status
         if (response.ok) {
-            console.log('success');
+            document.location.replace('/');
+            //console.log('success');
         } else {
             alert(response.statusText);
         }
