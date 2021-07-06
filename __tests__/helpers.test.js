@@ -1,5 +1,5 @@
 // 14.4.5 step THREE import the format_date() function
-const {format_date, format_plural} = require('../utils/helpers');
+const {format_date, format_plural, format_url} = require('../utils/helpers');
 
 // 14.4.5 step ONE
     //install npm i jest -D
@@ -19,4 +19,15 @@ test('format_plural() returns correct pluralized words', () => {
 
     expect(word1).toBe('lion');
     expect(word2).toBe('tigers');
+});
+
+//14.4.7 step ONE write a test that shortens a URL string
+test('format_url() returns a simplified url string', () => {
+    const url1 = format_url('http://test.com/page/1');
+    const url2 = format_url('https://www.coolstuff.com/abcdefg/');
+    const url3 = format_url('https://www.google.com?q=hello');
+  
+    expect(url1).toBe('test.com');
+    expect(url2).toBe('coolstuff.com');
+    expect(url3).toBe('google.com');
 });

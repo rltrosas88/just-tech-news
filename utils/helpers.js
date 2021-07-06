@@ -8,6 +8,16 @@ module.exports = {
             date
         ).getFullYear()}`;
     },
+    //14.4.7 step TWO add a format_url() method
+    //14.4.7 step THREE chain the methodes with replace() to return URLs that have more after the domain 
+    format_url: url => {
+        return url
+            .replace('http://', '')
+            .replace('https://', '')
+            .replace('www.', '')
+            .split('/')[0]
+            .split('?')[0];
+    },
     //14.4.6 step TWO add a format_plural() method
     format_plural: (word, amount) => {
         if (amount !== 1) {
@@ -15,5 +25,5 @@ module.exports = {
         }
     
         return word;
-      }
+      } 
 };
