@@ -5,12 +5,15 @@
 <article class="post">
     <div class="title">
         <a href="{{post_url}}" target="_blank">{{title}}</a>
-        <span>({{post_url}})</span>
+        {{!-- 14.4.8 step FIVE  replace the post_url with format_url post_url--}}
+        <span>({{format_url post_url}})</span>
     </div>
+    {{!-- 14.4.8 step SIX replace all instances of comments and points with the format_plural helper --}}
     <div class="meta">
-        {{vote_count}} point(s) by {{user.username}} on
-        {{created_at}}
-                |
-        <a href="/post/{{id}}">{{comments.length}} comment(s)</a>
-    </div>
+        {{!-- 14.4.8 step FOUR to use the helpers in the templates add them to the handlbars.js expressions
+            replace the created_at with format_date create_at --}}
+        {{vote_count}} {{format_plural "point" vote_count}} by {{user.username}} on {{format_date created_at}}
+        |
+        <a href="/post/{{id}}">{{comments.length}} {{format_plural "comment" comments.length}}</a>
+</div>
 </article>
