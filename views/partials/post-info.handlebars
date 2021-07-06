@@ -1,0 +1,16 @@
+{{!-- 14.4.3 step ONE create a paritals folder in side the views folder and create this file
+    move the article element and its contents here --}}
+{{!-- 14.4.3 step THREE update all variables to not use post. property syntax 
+    when we pass the post object into the partial, we don't pass the object as is but rather pass in all of the properites of that object --}}
+<article class="post">
+    <div class="title">
+        <a href="{{post_url}}" target="_blank">{{title}}</a>
+        <span>({{post_url}})</span>
+    </div>
+    <div class="meta">
+        {{vote_count}} point(s) by {{user.username}} on
+        {{created_at}}
+                |
+        <a href="/post/{{id}}">{{comments.length}} comment(s)</a>
+    </div>
+</article>
