@@ -1,5 +1,3 @@
-//14.4.8 step ONE import the helper functions
-const helpers = require('./utils/helpers');
 //14.1.3 step TWO.ONE make the style sheet available to the client
 const path = require('path');
 //1.6 step 9
@@ -28,6 +26,8 @@ const sess = {
 };
 
 app.use(session(sess));
+//14.4.8 step ONE import the helper functions
+const helpers = require('./utils/helpers');
 
 //14.4.8 step TWO pass the helpers to the existing exphbs.creat() statement
 const hbs = exphbs.create({ helpers });
