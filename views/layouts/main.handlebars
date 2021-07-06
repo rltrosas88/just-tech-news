@@ -20,8 +20,13 @@
             {{!-- 14.2.3 step ONE add a navigation bar --}}
             <nav>
                 {{!-- 14.2.6 step THREE add a logout button --}}
+                {{!-- 14.3.7 step ONE don't show the login link to users who are already logged in - 
+                    and don't show the logout button to users who are already logged out --}}
+                {{#if loggedIn}}
                 <button id="logout" class="btn-no-style">logout</button>
+                {{else}}
                 <a href="/login">login</a>
+                {{/if}}
             </nav>
         </header>
         <main>
@@ -34,7 +39,10 @@
         </footer>
     </div>
     {{!-- 14.2.6 step FOUR connect the logout.js file --}}
+    {{!-- 14.3.7 step TWO wrapp the script element in an if helper so logout.js wont throw an error --}}
+    {{#if loggedIn}}
     <script src="/javascript/logout.js"></script>
+    {{/if}}
 </body>
 
 </html>

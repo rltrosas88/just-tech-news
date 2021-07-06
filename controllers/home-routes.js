@@ -45,7 +45,11 @@ router.get('/', (req, res) => {
             //14.1.6 step FOUR use the get() method to serialize the object down to only the properties you need
             // res.render('homepage', dbPostData[0].get({ plain: true }));
             //14.1.6 step SIX up date render () and add the array to an object and continue passing an object to the template
-            res.render('homepage', { posts });
+            // 14.3.7 update the homepage route to render the loggedIn
+            res.render('homepage', {
+                posts,
+                loggedIn: req.session.loggedIn
+            });
         })
         .catch(err => {
             console.log(err);
