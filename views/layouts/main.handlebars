@@ -23,6 +23,8 @@
                 {{!-- 14.3.7 step ONE don't show the login link to users who are already logged in - 
                     and don't show the logout button to users who are already logged out --}}
                 {{#if loggedIn}}
+                {{!-- 14.5.3 step FIVE update the nav element to include a login link --}}
+                <a href="/dashboard">dashboard</a>
                 <button id="logout" class="btn-no-style">logout</button>
                 {{else}}
                 <a href="/login">login</a>
