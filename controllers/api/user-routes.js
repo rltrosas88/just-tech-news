@@ -3,6 +3,8 @@
 const router = require('express').Router();
 //4.5 part FOUR import the Vote model
 const { User, Post, Comments, Vote } = require('../../models');
+// 14.5.5 step TWO import the withAuth module
+const withAuth = require('../../utils/auth');
 
 // GET /api/users
 router.get('/', (req, res) => {
@@ -64,7 +66,8 @@ router.get('/:id', (req, res) => {
 });
 
 // POST /api/users
-router.post('/', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.post('/', withAuth, (req, res) => {
     //1.6 Step 4
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
     User.create({
@@ -89,7 +92,8 @@ router.post('/', (req, res) => {
 });
 
 //2.6 part 1
-router.post('/login', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.post('/login', withAuth, (req, res) => {
     // Query operation
     // expects {email: 'lernantino@gmail.com', password: 'password1234'}
     User.findOne({
@@ -121,7 +125,8 @@ router.post('/login', (req, res) => {
 });
 
 //14.2.6 step ONE add a new /logout
-router.post('/logout', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.post('/logout', withAuth, (req, res) => {
     //14.2.6 step TWO use the destroy() method to clear the session
     if (req.session.loggedIn) {
         req.session.destroy(() => {
@@ -133,7 +138,8 @@ router.post('/logout', (req, res) => {
 });
 
 // PUT /api/users/1
-router.put('/:id', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.put('/:id', withAuth, (req, res) => {
     //1.6 Step 5
     // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
 
@@ -158,7 +164,8 @@ router.put('/:id', (req, res) => {
 });
 
 // DELETE /api/users/1
-router.delete('/:id', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.delete('/:id', withAuth, (req, res) => {
     //1.6 Step 6
     User.destroy({
         where: {

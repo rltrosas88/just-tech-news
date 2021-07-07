@@ -4,6 +4,8 @@ const router = require('express').Router();
 const sequelize = require('../../config/connection');
 //5.5 step TWO add comment to the destructured objects 
 const { Post, User, Comments, Vote } = require('../../models');
+// 14.5.5 step TWO import the withAuth module
+const withAuth = require('../../utils/auth');
 
 
 // 3.6 step TWO create a route that will get all users
@@ -91,7 +93,8 @@ router.get('/:id', (req, res) => {
 });
 
 //3.6 step NINE assign the values of the title, post_url, and user_id to the properties in the req.body object
-router.post('/', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.post('/', withAuth, (req, res) => {
     // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
     //14.5.4 step FIVE update the post.create() query to include the user_id
     Post.create({
@@ -107,7 +110,8 @@ router.post('/', (req, res) => {
 });
 
 // 4.4 step ONE PUT /api/posts/upvote
-router.put('/upvote', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.put('/upvote', withAuth, (req, res) => {
     // Vote.create({
     //     user_id: req.body.user_id,
     //     post_id: req.body.post_id
@@ -146,7 +150,8 @@ router.put('/upvote', (req, res) => {
 });
 
 //3.6 step TEN update the Post's Title
-router.put('/:id', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.put('/:id', withAuth, (req, res) => {
     Post.update(
         {
             title: req.body.title
@@ -171,7 +176,8 @@ router.put('/:id', (req, res) => {
 });
 
 //3.6 step ELEVEN delete an entry
-router.delete('/:id', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.delete('/:id', withAuth, (req, res) => {
     console.log('id', req.params.id);
     Post.destroy({
         where: {

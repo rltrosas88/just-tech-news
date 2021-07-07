@@ -1,6 +1,8 @@
 //5.4 step ONE define the comments own endpoints
 const router = require('express').Router();
 const { Comments } = require('../../models');
+// 14.5.5 step TWO import the withAuth module
+const withAuth = require('../../utils/auth');
 
 router.get('/', (req, res) => {
     //5.4 step FOUR
@@ -12,7 +14,8 @@ router.get('/', (req, res) => {
         });
 });
 
-router.post('/', (req, res) => {
+//14.5.5 step FOUR protect (authguard) routes
+router.post('/', withAuth, (req, res) => {
     //5.4 step THREE 
     // expects => {comment_text: "This is the comment", user_id: 1, post_id: 2}
     //14.3.5 step THREE update the .post('/')
@@ -31,7 +34,8 @@ router.post('/', (req, res) => {
     }
 });
 
-router.delete('/:id', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.delete('/:id', withAuth, (req, res) => {
     //5.4 step FIVE
     Comments.destroy({
         where: {

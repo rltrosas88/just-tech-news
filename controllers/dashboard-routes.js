@@ -1,10 +1,13 @@
+// 14.5.5 step TWO import the withAuth module
+const withAuth = require('../utils/auth');
 // 14.5.3 step TWO
 const router = require('express').Router();
 const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
 
 // 14.5.3 step FOUR add a GET route
-router.get('/', (req, res) => {
+// 14.5.5 step THREE insert the withAuth() function into the GET route
+router.get('/', withAuth, (req, res) => {
     // 14.5.4 step ONE update so
         //the dashboard will only display posts create by the logged in user
             //add a where object to the findAll()query that uses the id saved on the session
