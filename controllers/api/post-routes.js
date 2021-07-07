@@ -93,6 +93,7 @@ router.get('/:id', (req, res) => {
 //3.6 step NINE assign the values of the title, post_url, and user_id to the properties in the req.body object
 router.post('/', (req, res) => {
     // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
+    //14.5.4 step FIVE update the post.create() query to include the user_id
     Post.create({
         title: req.body.title,
         post_url: req.body.post_url,

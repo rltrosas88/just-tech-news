@@ -14,3 +14,21 @@
         <button type="submit" class="btn">Create</button>
     </form>
 </section>
+{{!-- 14.5.4 step TWO update the HTML and Handlebars.js
+    users wont see any of this content if they have not posts because of the if helper --}}
+{{#if posts.length}}
+<section>
+    <h2>Your Posts</h2>
+    <ol>
+        {{#each posts as |post|}}
+        <li>
+            {{> post-info post}}
+            <a href="/dashboard/edit/{{post.id}}" class="edit-link">Edit post</a>
+        </li>
+        {{/each}}
+    </ol>
+</section>
+{{/if}}
+
+{{!-- 14.5.4 step THREE link the add-post.js --}}
+<script src="/javascript/add-post.js"></script>
