@@ -7,9 +7,8 @@ const homeRoutes = require('./home-routes.js');
 // 14.5.3 step THREE merge the dashboard router module into the rest of the app
 const dashboardRoutes = require('./dashboard-routes.js');
 
-router.use('/dashboard', dashboardRoutes);
-
 router.use('/', homeRoutes);
+router.use('/dashboard', dashboardRoutes);
 router.use('/api', apiRoutes);
 
 // router.use((req, res) => {

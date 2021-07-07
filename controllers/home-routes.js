@@ -37,7 +37,7 @@ router.get('/', (req, res) => {
         ]
     })
         .then(dbPostData => {
-            //14.1.6 step THREE add console.log
+        //14.1.6 step THREE add console.log
             //console.log(dbPostData[0]);
             //14.1.6 step FIVE the entire array of posts will be in the template the array needs to serialized
             const posts = dbPostData.map(post => post.get({ plain: true }));
@@ -73,7 +73,7 @@ router.get('/post/:id', (req, res) => {
         ],
         include: [
             {
-                model: Comment,
+                model: Comments,
                 attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model: User,
@@ -124,12 +124,11 @@ router.get('/post/:id', (req, res) => {
 
 // 14.2.3 step FOUR add a route that renders login
 router.get('/login', (req, res) => {
-    //14.2.5 step FIVE
     if (req.session.loggedIn) {
         res.redirect('/');
         return;
     }
-
+  
     res.render('login');
 });
 

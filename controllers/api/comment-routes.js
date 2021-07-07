@@ -19,19 +19,16 @@ router.post('/', withAuth, (req, res) => {
     //5.4 step THREE 
     // expects => {comment_text: "This is the comment", user_id: 1, post_id: 2}
     //14.3.5 step THREE update the .post('/')
-    if (req.session) {
         Comments.create({
             comment_text: req.body.comment_text,
-            post_id: req.body.post_id,
-            // use the id from the session
-            user_id: req.session.user_id
+            user_id: req.session.user_id,
+            post_id: req.body.post_id
         })
             .then(dbCommentData => res.json(dbCommentData))
             .catch(err => {
                 console.log(err);
                 res.status(400).json(err);
             });
-    }
 });
 
 //14.5.5 step FOUR proget (authguard) routes
@@ -54,5 +51,6 @@ router.delete('/:id', withAuth, (req, res) => {
             res.status(500).json(err);
         });
 });
-
+      
 module.exports = router;
+      

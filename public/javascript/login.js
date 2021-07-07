@@ -16,7 +16,7 @@ async function loginFormHandler(event) {
         });
   
         if (response.ok) {
-            document.location.replace('/');
+            document.location.replace('/dashboard/');
         } else {
             alert(response.statusText);
         }
@@ -53,7 +53,7 @@ async function signupFormHandler(event) {
         if (response.ok) {
             // 14.5.3 step SIX automatically redirect users to the dashboard after they successfully log in by
                 //changin the document.location.replace('/') to document.location.replace('/dashboard')
-            document.location.replace('/dashboard');
+            document.location.replace('/dashboard/');
             //console.log('success');
         } else {
             alert(response.statusText);
@@ -64,4 +64,3 @@ async function signupFormHandler(event) {
 document.querySelector('.login-form').addEventListener('submit', loginFormHandler);
 
 document.querySelector('.signup-form').addEventListener('submit', signupFormHandler);
-

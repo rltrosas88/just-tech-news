@@ -27,9 +27,8 @@ router.get('/', (req, res) => {
         //order: [['created_at', 'DESC']],
         //3.6 step FOUR include the JOIN to the User table
         include: [
-            //5.5 step ONE include the Comment model here:
             {
-                model: Comments,
+                model: Comment,
                 attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model: User,
@@ -66,7 +65,7 @@ router.get('/:id', (req, res) => {
         ],
         include: [
             {
-                model: Comments,
+                model: Comment,
                 attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model: User,
@@ -138,15 +137,12 @@ router.put('/upvote', withAuth, (req, res) => {
     //4.6 step FOUR custom static method created in models/Post.js
     //14.3.4 step FIVE custom static method created in models/Post.js
     // make sure the session exists first
-    if (req.session) {
-        // pass session id along with all destructured properties on req.body
-        Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comments, User })
-            .then(updatedVoteData => res.json(updatedVoteData))
-            .catch(err => {
-                console.log(err);
-                res.status(500).json(err);
-            });
-    }
+    Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comments, User })
+        .then(updatedVoteData => res.json(updatedVoteData))
+        .catch(err => {
+            console.log(err);
+            res.status(500).json(err);
+        });
 });
 
 //3.6 step TEN update the Post's Title
@@ -173,7 +169,7 @@ router.put('/:id', withAuth, (req, res) => {
             console.log(err);
             res.status(500).json(err);
         });
-});
+  });
 
 //3.6 step ELEVEN delete an entry
 //14.5.5 step FOUR proget (authguard) routes
