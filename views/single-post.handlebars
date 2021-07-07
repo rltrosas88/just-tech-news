@@ -1,0 +1,27 @@
+{{!-- 14.3.3 step ONE --}}
+{{!-- 14.4.3 replace the article element with the post-info post expression --}}
+{{> post-info post}}
+{{!-- 14.3.3 step FOUR expand the layout to include the form and comments --}}
+{{!-- 14.3.6 step TWO use the variable to conditionally render the <form> element --}}
+{{#if loggedIn}}
+<form class="comment-form">
+    <div>
+        <textarea name="comment-body"></textarea>
+    </div>
+
+    <div>
+        <button type="submit">add comment</button>
+        <button type="button" class="upvote-btn">upvote</button>
+    </div>
+</form>
+{{/if}}
+
+{{!-- 14.4.4 step TWO replace the div class comments with the comments post.comments expression --}}
+{{> comments post.comments}}
+
+{{!-- 14.3.4 step ONE --}}
+{{!-- 14.3.6 step THREE update to conditionally rend the script elements --}}
+{{#if loggedIn}}
+<script src="/javascript/comment.js"></script>
+<script src="/javascript/upvote.js"></script>
+{{/if}}

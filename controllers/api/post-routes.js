@@ -4,6 +4,8 @@ const router = require('express').Router();
 const sequelize = require('../../config/connection');
 //5.5 step TWO add comment to the destructured objects 
 const { Post, User, Comments, Vote } = require('../../models');
+// 14.5.5 step TWO import the withAuth module
+const withAuth = require('../../utils/auth');
 
 
 // 3.6 step TWO create a route that will get all users
@@ -20,14 +22,13 @@ router.get('/', (req, res) => {
             [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count']
         ],
         //5.5 step ONE
-        order: [['created_at', 'DESC']],
+        //order: [['created_at', 'DESC']],
         //3.6 step TWELVE to ensure that the latest news articles are show first to the client
         //order: [['created_at', 'DESC']],
         //3.6 step FOUR include the JOIN to the User table
         include: [
-            //5.5 step ONE include the Comment model here:
             {
-                model: Comments,
+                model: Comment,
                 attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model: User,
@@ -64,7 +65,7 @@ router.get('/:id', (req, res) => {
         ],
         include: [
             {
-                model: Comments,
+                model: Comment,
                 attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
                 include: {
                     model: User,
@@ -91,12 +92,14 @@ router.get('/:id', (req, res) => {
 });
 
 //3.6 step NINE assign the values of the title, post_url, and user_id to the properties in the req.body object
-router.post('/', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.post('/', withAuth, (req, res) => {
     // expects {title: 'Taskmaster goes public!', post_url: 'https://taskmaster.com/press', user_id: 1}
+    //14.5.4 step FIVE update the post.create() query to include the user_id
     Post.create({
         title: req.body.title,
         post_url: req.body.post_url,
-        user_id: req.body.user_id
+        user_id: req.session.user_id
     })
         .then(dbPostData => res.json(dbPostData))
         .catch(err => {
@@ -106,7 +109,8 @@ router.post('/', (req, res) => {
 });
 
 // 4.4 step ONE PUT /api/posts/upvote
-router.put('/upvote', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.put('/upvote', withAuth, (req, res) => {
     // Vote.create({
     //     user_id: req.body.user_id,
     //     post_id: req.body.post_id
@@ -131,16 +135,19 @@ router.put('/upvote', (req, res) => {
     //     })
     //     .then(dbPostData => res.json(dbPostData))
     //4.6 step FOUR custom static method created in models/Post.js
-    Post.upvote(req.body, { Vote, Comments, User })
+    //14.3.4 step FIVE custom static method created in models/Post.js
+    // make sure the session exists first
+    Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comments, User })
         .then(updatedVoteData => res.json(updatedVoteData))
         .catch(err => {
             console.log(err);
-            res.status(400).json(err);
+            res.status(500).json(err);
         });
 });
 
 //3.6 step TEN update the Post's Title
-router.put('/:id', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.put('/:id', withAuth, (req, res) => {
     Post.update(
         {
             title: req.body.title
@@ -162,10 +169,12 @@ router.put('/:id', (req, res) => {
             console.log(err);
             res.status(500).json(err);
         });
-});
+  });
 
 //3.6 step ELEVEN delete an entry
-router.delete('/:id', (req, res) => {
+//14.5.5 step FOUR proget (authguard) routes
+router.delete('/:id', withAuth, (req, res) => {
+    console.log('id', req.params.id);
     Post.destroy({
         where: {
             id: req.params.id

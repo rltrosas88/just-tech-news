@@ -8,7 +8,7 @@ const sequelize = require('../config/connection');
 class Comments extends Model {}
     
 Comments.init(
-    {
+      {
         // 5.3 step TWO columns will go here
         id: {
             type: DataTypes.INTEGER,
@@ -17,8 +17,8 @@ Comments.init(
             autoIncrement: true
         },
         comment_text: {
-            type: DataTypes.STRING, 
-            allowNull:false,
+            type: DataTypes.STRING,
+            allowNull: false,
             validate: {
                 len: [1]
             }
@@ -42,8 +42,9 @@ Comments.init(
         sequelize,
         freezeTableName: true,
         underscored: true,
-        modelName: 'comment'
+        modelName: 'comments'
     }
 );
     
-    module.exports = Comments;
+module.exports = Comments;
+    

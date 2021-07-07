@@ -29,18 +29,18 @@ router.get('/:id', (req, res) => {
         },
         include: [
             {
-                model: Post,
-                attributes: ['id', 'title', 'post_url', 'created_at']
+                    model: Post,
+                    attributes: ['id', 'title', 'post_url', 'created_at']
             },
             //5.5 step THREE include the Comment model here
             {
-                model: Comments,
+                model: Comment,
                 attributes: ['id', 'comment_text', 'created_at'],
                 include: {
                     model: Post,
                     attributes: ['title']
                 }
-              },
+            },
             //4.5 step THREE include posts and votes
             {
                 model: Post,
@@ -72,7 +72,16 @@ router.post('/', (req, res) => {
         email: req.body.email,
         password: req.body.password
     })
-        .then(dbUserData => res.json(dbUserData))
+        //14.2.5 step TWO replace .then() callback
+        .then(dbUserData => {
+            req.session.save(() => {
+                req.session.user_id = dbUserData.id;
+                req.session.username = dbUserData.username;
+                req.session.loggedIn = true;
+        
+                res.json(dbUserData);
+            });
+        })
         .catch(err => {
             console.log(err);
             res.status(500).json(err);
@@ -99,9 +108,27 @@ router.post('/login', (req, res) => {
             res.status(400).json({ message: 'Incorrect password!' });
             return;
         }
-    
-        res.json({ user: dbUserData, message: 'You are now logged in!' });
+        //14.2.5 step THREE
+        req.session.save(() => {
+            req.session.user_id = dbUserData.id;
+            req.session.username = dbUserData.username;
+            req.session.loggedIn = true;
+        
+            res.json({ user: dbUserData, message: 'You are now logged in!' });
+        });
     });
+});
+
+//14.2.6 step ONE add a new /logout
+router.post('/logout', (req, res) => {
+    //14.2.6 step TWO use the destroy() method to clear the session
+    if (req.session.loggedIn) {
+        req.session.destroy(() => {
+            res.status(204).end();
+        });
+    } else {
+        res.status(404).end();
+    }
 });
 
 // PUT /api/users/1
@@ -117,7 +144,7 @@ router.put('/:id', (req, res) => {
         }
     })
         .then(dbUserData => {
-            if (!dbUserData[0]) {
+            if (!dbUserData) {
                 res.status(404).json({ message: 'No user found with this id' });
                 return;
             }
@@ -149,5 +176,5 @@ router.delete('/:id', (req, res) => {
             res.status(500).json(err);
         });
 });
-
+    
 module.exports = router;
